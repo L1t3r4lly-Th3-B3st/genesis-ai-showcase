@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1018">
+  <meta name="description" content="Genesis AI: an independent educational AI research project exploring small neural models, source-grounded research, and local computing.">
+  <meta property="og:title" content="Genesis AI — Independent AI Research">
+  <meta property="og:description" content="Building, learning, and documenting how AI works—from original small models to future local GPU research.">
+  <title>Genesis AI — Independent AI Research</title>
+  <style>
+    :root { color-scheme:dark; --bg:#0a1018; --surface:#0e1924; --surface2:#12212b; --border:#25404a; --text:#f0f8fb; --muted:#a2b9c4; --teal:#69ead5; --blue:#8cb6ff; --green:#b4f59d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--text); font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; background:radial-gradient(ellipse 70% 30% at 85% -5%,#103b42 0,transparent 80%),radial-gradient(ellipse 40% 25% at 4% 25%,#102735 0,transparent 85%),var(--bg); }
+    a { color:var(--teal); text-underline-offset:4px; }
+    a:hover { color:#c6fff2; }
+    button { font:inherit; cursor:pointer; }
+    .skip { position:absolute; top:-100px; left:1rem; padding:.6rem 1rem; background:white; color:#111; z-index:100; }
+    .skip:focus { top:1rem; }
+    .wrap { width:min(1110px,calc(100% - 44px)); margin:auto; }
+    header { border-bottom:1px solid #23353d; background:#0a1018dd; backdrop-filter:blur(12px); position:sticky; top:0; z-index:10; }
+    .nav { display:flex; align-items:center; justify-content:space-between; min-height:74px; gap:18px; }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; color:white; font-weight:800; letter-spacing:.08em; }
+    .mark { display:grid; place-items:center; width:39px; height:39px; border-radius:12px; color:var(--teal); font-weight:900; border:1px solid #70ead75c; background:linear-gradient(145deg,#164f53,#101e2e); }
+    nav { display:flex; flex-wrap:wrap; gap:21px; }
+    nav a { text-decoration:none; color:var(--muted); font-size:.88rem; font-weight:600; }
+    nav a:hover { color:var(--teal); }
+    .hero { display:grid; grid-template-columns: 1.1fr .9fr; align-items:center; gap:44px; padding:96px 0 72px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:9px; color:var(--teal); font-weight:800; font-size:.72rem; letter-spacing:.17em; text-transform:uppercase; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--teal); box-shadow:0 0 12px var(--teal); }
+    h1 { font-size:clamp(3.1rem,7vw,5.6rem); line-height:1.02; letter-spacing:-.07em; margin:25px 0 20px; }
+    h1 span { background:linear-gradient(90deg,#90f9d7,#84acff); background-clip:text; color:transparent; }
+    h2 { font-size:clamp(1.75rem,3.4vw,2.6rem); line-height:1.18; letter-spacing:-.04em; margin:13px 0 17px; }
+    h3 { font-size:1.11rem; margin:0 0 11px; letter-spacing:-.01em; }
+    .lead { color:#bed0d9; max-width:640px; font-size:1.13rem; line-height:1.8; }
+    .buttons { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 19px; min-height:46px; font-size:.91rem; font-weight:750; border-radius:11px; text-decoration:none; border:1px solid #41776f; }
+    .primary { background:var(--teal); color:#041d20; border-color:var(--teal); }
+    .primary:hover { background:#baffed; color:#041d20; }
+    .secondary { background:#15262f; color:#e9f9ff; }
+    .secondary:hover { color:white; border-color:var(--teal); }
+    .subtle { font-size:.84rem; color:var(--muted); margin-top:21px; }
+    .visual { border:1px solid #3a5962; border-radius:22px; background:linear-gradient(135deg,#162b36,#0c1724); box-shadow:0 22px 68px #0007, inset 0 1px #ffffff12; min-height:365px; padding:21px; overflow:hidden; }
+    .visual-top { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #31505a; padding-bottom:13px; color:#9bc0c8; font-size:.74rem; letter-spacing:.14em; }
+    .lights { display:flex; gap:6px; }
+    .lights i { display:block; width:8px; height:8px; border-radius:50%; background:#2d515b; }
+    .lights i:first-child { background:#69ead5; }
+    .signal { display:flex; align-items:end; justify-content:space-between; gap:5px; height:145px; margin:22px 0; padding:0 5px; }
+    .signal span { flex:1; height:var(--h); border-radius:5px 5px 1px 1px; background:linear-gradient(0deg,#123e62,#38c8bb); opacity:.86; }
+    .signal span:nth-child(3n) { background:linear-gradient(0deg,#223b69,#8dafff); }
+    .metrics { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .metric { padding:13px 15px; border:1px solid #31505a; border-radius:11px; background:#0e202b; }
+    .metric strong { display:block; font-size:1.17rem; color:#e8fffa; line-height:1.3; }
+    .metric small { color:#97bbc5; font-size:.70rem; }
+    section { scroll-margin-top:90px; padding:64px 0; }
+    .section-intro { max-width:750px; color:var(--muted); margin-bottom:27px; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; }
+    .card { border:1px solid #2b4550; border-radius:16px; background:linear-gradient(160deg,#142532,#0c1823); padding:25px; }
+    .index { font-size:.75rem; font-weight:800; letter-spacing:.14em; color:var(--teal); margin-bottom:20px; }
+    .card p { color:#b5c8d1; font-size:.93rem; margin:0; }
+    .bar { height:1px; background:linear-gradient(90deg,transparent,#395762,transparent); margin:10px 0; }
+    .panel { display:grid; grid-template-columns:1fr 1fr; gap:24px; border:1px solid #33515c; border-radius:18px; padding:30px; background:#12232e; }
+    .panel p { color:#bbd0d9; }
+    .tag { display:inline-block; border:1px solid #3d7770; color:#a1eadd; border-radius:99px; font-size:.72rem; font-weight:750; padding:4px 10px; margin-bottom:11px; }
+    .tag.future { color:#aecaff; border-color:#45699d; }
+    .bullets { padding-left:20px; color:#c7d8df; }
+    .bullets li { margin:10px 0; }
+    .callout { border-left:3px solid var(--teal); background:#123039; padding:18px 21px; color:#c2dce3; margin-top:22px; border-radius:0 12px 12px 0; }
+    .timeline { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; }
+    .stage { padding:24px; background:#0e1b26; border:1px solid #2b4550; border-radius:14px; }
+    .stage .number { color:var(--teal); font-size:.77rem; font-weight:850; letter-spacing:.12em; }
+    .stage p { color:#aec3cd; font-size:.94rem; }
+    .sponsor { display:grid; grid-template-columns:1.2fr .8fr; gap:25px; align-items:center; padding:34px; border:1px solid #5c8e80; border-radius:18px; background:linear-gradient(120deg,#1b403d,#101f33); }
+    .sponsor p { color:#c9dce1; }
+    .sponsor .button { justify-self:start; }
+    .fine { color:#a3b5bc; font-size:.85rem; }
+    footer { padding:30px 0 47px; border-top:1px solid #273d45; color:#8ca9b4; }
+    .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    @media(max-width:870px) { .hero { grid-template-columns:1fr; padding-top:67px; gap:28px; } .visual { max-width:650px; min-height:310px; } .cards,.timeline { grid-template-columns:1fr 1fr; } .panel,.sponsor { grid-template-columns:1fr; } }
+    @media(max-width:600px) { .wrap { width:calc(100% - 32px); } .nav { align-items:flex-start; flex-direction:column; padding:13px 0; gap:12px; } nav { gap:15px; } nav a { font-size:.78rem; } section { padding:42px 0; scroll-margin-top:120px; } .hero { padding:56px 0 33px; } .cards,.timeline { grid-template-columns:1fr; } .panel,.sponsor { padding:22px; } .visual { padding:14px; } .footer-inner { flex-direction:column; align-items:flex-start; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap nav">
+      <a href="#top" class="brand" aria-label="Genesis AI home"><span class="mark">G</span> GENESIS <span style="color:#7cded5">AI</span></a>
+      <nav aria-label="Main navigation"><a href="#project">The project</a><a href="#progress">Current work</a><a href="#roadmap">Research plan</a><a href="#support">Support</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="wrap hero" id="top">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> INDEPENDENT EDUCATIONAL AI RESEARCH</div>
+        <h1>Learn it.<br>Build it.<br><span>Understand it.</span></h1>
+        <p class="lead">Genesis AI is a hands-on exploration of computer science, original neural models, and local artificial intelligence. The aim is to understand how these systems work—and share practical lessons with others.</p>
+        <div class="buttons"><a class="button primary" href="#project">Explore the project <span aria-hidden="true">↗</span></a><a class="button secondary" href="#support">Research & sponsorship <span aria-hidden="true">→</span></a></div>
+        <p class="subtle">Independent student-led development · Early-stage research prototype</p>
+      </div>
+      <div class="visual" role="img" aria-label="Stylized AI research dashboard visualization showing model parameters and learning goals. This is an illustration, not a live measurement.">
+        <div class="visual-top"><span>GENESIS / EXPERIMENT LOG</span><span class="lights"><i></i><i></i><i></i></span></div>
+        <div class="signal" aria-hidden="true"><span style="--h:22%"></span><span style="--h:40%"></span><span style="--h:34%"></span><span style="--h:73%"></span><span style="--h:52%"></span><span style="--h:86%"></span><span style="--h:58%"></span><span style="--h:96%"></span><span style="--h:70%"></span><span style="--h:57%"></span><span style="--h:81%"></span><span style="--h:41%"></span><span style="--h:68%"></span><span style="--h:43%"></span><span style="--h:24%"></span></div>
+        <div class="metrics"><div class="metric"><strong>22,064</strong><small>Original neural text-model parameters</small></div><div class="metric"><strong>45,173</strong><small>Response-intent classifier parameters</small></div><div class="metric"><strong>V6.3</strong><small>Documented research prototype</small></div><div class="metric"><strong>Local-first</strong><small>Long-term engineering direction</small></div></div>
+      </div>
+    </div>
+    <div class="wrap"><div class="bar"></div></div>
+    <section class="wrap" id="project">
+      <div class="eyebrow">01 / THE MISSION</div><h2>From curiosity to engineering knowledge</h2>
+      <p class="section-intro">This project is about learning by building: training small models, exploring inference and research tools, understanding the boundaries of what they can do, and gradually developing the expertise for larger local systems.</p>
+      <div class="cards">
+        <article class="card"><div class="index">01 / MODEL FUNDAMENTALS</div><h3>Original AI experiments</h3><p>Experimenting with small neural networks trained from scratch, rather than relying on an external large language model for every response.</p></article>
+        <article class="card"><div class="index">02 / INFORMATION QUALITY</div><h3>Source-aware research</h3><p>Exploring source-linked knowledge retrieval and cautious treatment of web information, including the limits of search and extraction.</p></article>
+        <article class="card"><div class="index">03 / SYSTEMS ENGINEERING</div><h3>Local AI infrastructure</h3><p>Studying GPUs, VRAM, operating systems, inference performance, and the engineering tradeoffs of running AI on hardware under the developer's control.</p></article>
+      </div>
+    </section>
+    <section class="wrap" id="progress">
+      <div class="eyebrow">02 / WHERE THINGS STAND</div><h2>What exists today—and what doesn't</h2>
+      <div class="panel">
+        <div><span class="tag">CURRENT EXPERIMENTS</span><h3>Genesis AI research prototype</h3><ul class="bullets"><li>Small original neural next-token generator with 22,064 learned parameters.</li><li>Separate 45,173-parameter response-intent classifier.</li><li>Local conversation memory and export/import of compatible chat records.</li><li>Source-linked knowledge retrieval with a Wikipedia fallback and optional local SearXNG.</li><li>Read-only research tools, network restrictions, and unit-test coverage.</li></ul></div>
+        <div><span class="tag future">IMPORTANT LIMITATIONS</span><h3>Research prototype, not a frontier model</h3><ul class="bullets"><li>The original neural text model is extremely small and can produce incoherent responses.</li><li>The system does not match commercial large language models in reasoning or general knowledge.</li><li>External knowledge retrieval is not proof that an answer is correct.</li><li>The current research backend runs privately; this public page is a project overview, not a live chatbot.</li><li>Large-model FP16 inference is a future research goal, not a present capability.</li></ul></div>
+      </div>
+      <div class="callout"><strong>Research principle:</strong> Report what works, document what fails, and separate demonstrated capabilities from planned work. Accurate limitations are part of the engineering.</div>
+    </section>
+    <section class="wrap" id="roadmap">
+      <div class="eyebrow">03 / RESEARCH ROADMAP</div><h2>Building toward a dedicated AI research workstation</h2>
+      <p class="section-intro">Funding and hardware assistance would support staged, hands-on learning and experiments. An ambitious long-term objective is studying extremely large open-weight models in full 16-bit precision; reaching that scale requires infrastructure far beyond a typical personal PC.</p>
+      <div class="timeline">
+        <article class="stage"><div class="number">PHASE 01 — PLANNED</div><h3>Hardware foundations</h3><p>Acquire compatible high-memory GPU hardware and supporting equipment; document power, cooling, software setup, and inference constraints.</p></article>
+        <article class="stage"><div class="number">PHASE 02 — PLANNED</div><h3>Repeatable evaluations</h3><p>Measure speed, memory use, accuracy, uncertainty handling, and source attribution on models that the available hardware can actually run.</p></article>
+        <article class="stage"><div class="number">PHASE 03 — PLANNED</div><h3>Community resources</h3><p>Share technical findings, benchmark methods, educational notes, and selected open tools so other independent learners can reproduce the experiments.</p></article>
+      </div>
+      <p class="fine">The proposed research activities above are goals, not completed studies or guaranteed deliverables. Hardware scope and milestones will depend on available funding.</p>
+    </section>
+    <section class="wrap" id="support">
+      <div class="sponsor"><div><div class="eyebrow">04 / COMMUNITY & SUPPORT</div><h2>Help make independent AI research possible</h2><p>Genesis AI welcomes conversations about equipment donations, compatible GPUs, hardware guidance, funding support, and educational collaboration. Contributions can support specific research phases even when they don't fund an entire workstation.</p><p class="fine">All sponsorship arrangements would be agreed directly with the project lead. No grant or sponsorship is represented as awarded here.</p></div><a class="button primary" href="https://github.com/L1t3r4lly-Th3-B3st" rel="noopener noreferrer">View developer's GitHub profile <span aria-hidden="true">↗</span></a></div>
+    </section>
+  </main>
+  <footer><div class="wrap footer-inner"><div><strong style="color:#eaf6fc">GENESIS AI</strong><div>Independent educational AI development.</div></div><div>Learning in public, engineering with evidence.</div></div></footer>
+</body>
+</html>
